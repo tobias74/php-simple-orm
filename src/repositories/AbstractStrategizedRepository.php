@@ -95,10 +95,6 @@ abstract class AbstractStrategizedRepository extends AbstractRepository
     }
 
 
-  public function getBySpecificationList($specList)
-  {
-    return $this->getReadStrategy()->getBySpecificationList($specList);
-  }
 
         
 

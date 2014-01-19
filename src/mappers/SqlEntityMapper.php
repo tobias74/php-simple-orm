@@ -193,17 +193,6 @@ class SqlEntityMapper extends SqlTableMapper
   }
 
 
-  public function getBySpecificationList($specList)
-  {
-    $sql = $this->generateSqlForSpecificationList($specList);   
-    $timer = $this->profiler->startTimer('in abstract entity mapper getting the db-service');
-    $dbService = $this->getDbService();
-    $timer->stop();
-    
-    $resultSet = $dbService->query($sql, $this);
-    $this->debugSql = $sql;
-    return $this->loadAllFromResultSet($resultSet);
-  }
   
   protected function generateSqlForSpecification($spec)
   {
@@ -211,11 +200,6 @@ class SqlEntityMapper extends SqlTableMapper
     return $sql;
   }
 
-  protected function generateSqlForSpecificationList($specList)
-  {
-    $sql = $this->getSqlEngine()->getSelectQueryForSpecificationList($specList, $this);
-    return $sql;
-  }
   
   public function countByCriteria($criteria)
   {
