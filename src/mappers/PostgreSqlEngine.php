@@ -29,9 +29,7 @@ class PostgreSqlEngine2013 extends AbstractSqlEngine2013
       $whereClause=" ";
     }
         
-    //error_log('this is what we got: '.$whereClause);
     return $whereClause;
-    //return $spec->getWhereClause($mapper);
   }
 
 
@@ -54,6 +52,28 @@ class PostgreSqlEngine2013 extends AbstractSqlEngine2013
     //return $spec->getWhereClause($mapper);
   }
 
+  
+
+  protected function getOrderClauseWithoutTableName($spec,$mapper)
+  {
+    if ($spec->hasOrderer())
+    {
+      $sqlGenerator = new UnpreparedPostgreSqlOrderClause($mapper);
+      $spec->getOrderer()->acceptVisitor($sqlGenerator);
+      $orderClause = " ORDER BY ".$sqlGenerator->getClauseForOrderer($spec->getOrderer());
+            
+    }
+    else 
+    {
+      $orderClause=" ";
+    }
+        
+    //error_log('this is what we got: '.$whereClause);
+    return $orderClause;
+    //return $spec->getWhereClause($mapper);
+  }
+  
+  
   
   protected function getLimitClause($spec,$mapper)
   {
