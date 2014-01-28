@@ -65,6 +65,7 @@ class DbService
 	
 	public function asyncQuery($sql,$mapper)
 	{
+	  error_log('async queries still used?');
 		// comment this out, when schema schanges are done.
 		//$this->workSchemaChanges($mapper);
 		if ($this->inAsyncQuery)

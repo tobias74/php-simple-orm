@@ -60,11 +60,11 @@ abstract class AbstractStrategizedRepository extends AbstractRepository
     {
       if ($userId == null)
       {
-        return $this->getSoleMatch(new \BrokenPottery\Specification( $this->criteria->hasId($entityId) ) );
+        return $this->getSoleMatch(new \VisitableSpecification\Specification( $this->criteria->hasId($entityId) ) );
       }
       else
       {
-        return $this->getSoleMatch(new \BrokenPottery\Specification($this->criteria->hasId($entityId) -> logicalAnd($this->criteria->belongsToUser($userId))));
+        return $this->getSoleMatch(new \VisitableSpecification\Specification($this->criteria->hasId($entityId) -> logicalAnd($this->criteria->belongsToUser($userId))));
       }
     }
     
@@ -84,7 +84,7 @@ abstract class AbstractStrategizedRepository extends AbstractRepository
 
     public function getAll()
     {
-      return $this->getBySpecification(new \BrokenPottery\Specification( $this->criteria->any() ) );
+      return $this->getBySpecification(new \VisitableSpecification\Specification( $this->criteria->any() ) );
     }
         
     
