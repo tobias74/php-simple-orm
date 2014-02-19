@@ -58,14 +58,7 @@ abstract class AbstractStrategizedRepository extends AbstractRepository
 
     public function getById($entityId, $userId = null)
     {
-      if ($userId == null)
-      {
-        return $this->getSoleMatch(new \VisitableSpecification\Specification( $this->criteria->hasId($entityId) ) );
-      }
-      else
-      {
-        return $this->getSoleMatch(new \VisitableSpecification\Specification($this->criteria->hasId($entityId) -> logicalAnd($this->criteria->belongsToUser($userId))));
-      }
+      return $this->getSoleMatch(new \VisitableSpecification\Specification( $this->criteria->hasId($entityId) ) );
     }
     
     public function existsId($entityId, $userId = null)

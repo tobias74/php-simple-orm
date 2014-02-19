@@ -2,6 +2,7 @@
 
  
 require_once(dirname(__FILE__).'/DomainObject.php');
+require_once(dirname(__FILE__).'/Exceptions.php');
 
 require_once(dirname(__FILE__).'/database/db-connector/MySqlConnector.php');
 require_once(dirname(__FILE__).'/database/db-connector/PostgreSqlConnector.php');
