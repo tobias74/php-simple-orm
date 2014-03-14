@@ -29,7 +29,77 @@ class SqlAssociationMapper extends SqlTableMapper
     return $where;
   }
   
+  
+  protected function getColumnHashForFieldHash($fieldHash)
+  {
+    $contentHash = array();
+    foreach($fieldHash as $field => $value)
+    {
+      $contentHash[$this->getColumnForField($field)] = $value;
+    }
+    return $contentHash;
+  }
+
+
+  
+  public function getAssociations($wantedField, $criteriaHash)
+  {
+      $fields = $this->dataMap->getFields();
+      $pos = array_search($wantedField, $fields);
+      if ($pos === false)
+      {
+        throw new ErrorException('bad codding here...'.$wantedField);
+      }
+      
+      
+      $assoc = $this->getColumnHashForFieldHash($criteriaHash);
+      
+      $dbResult = $this->select($assoc);
+      
+      $wantedColumn = $this->getColumnForField($wantedField);
+      
+      $itemIds=array();
+      while ($row = $dbResult->fetchObject())
+      {
+        array_push($itemIds, $row->$wantedColumn);
+      }
+      
+      return $itemIds;
     
+      
+  }  
+  
+  public function getSoleAssociation($wantedField, $criteriaHash)
+  {
+    $itemIds = $this->getAssociations($wantedField, $criteriaHash);
+    
+    if (count($itemIds) > 1)
+    {
+      throw new ErrorException('bad database here, we have to many assiciations for this: '.$calledField);
+    }
+    elseif (count($itemIds) === 1)
+    {
+      return $itemIds[0];
+    }
+    else 
+    {
+      throw new NoMatchException('did not find any associations for '.$wantedField);
+    }
+    
+  }
+    
+
+  public function makeAssociation($hash)
+  {
+    $assoc = $this->getColumnHashForFieldHash($hash);
+    $this->insert($assoc);
+  }
+
+  public function deleteAssociation($hash)
+  {
+    $assoc = $this->getColumnHashForFieldHash($hash);
+    $this->delete($assoc);
+  }
     
     
   public function __call($name, $arguments)
@@ -113,7 +183,7 @@ class SqlAssociationMapper extends SqlTableMapper
       }
       else
       {
-        throw new ErrorException('bad codding here...'.$wantedField);
+        throw new \ErrorException('bad codding here...'.$wantedField);
       }
 
       $assoc = array(
