@@ -24,6 +24,7 @@ class PostgreSqlOrderClause
   }
   
   
+  
   public function visitSingleOrderer($singleOrderer)
   {
     $column = $this->context->getResponsibleMapperForField($singleOrderer->getField())->getPreparedColumnForField($singleOrderer->getField());
@@ -33,7 +34,23 @@ class PostgreSqlOrderClause
   }
 
   
-  
+  public function visitDistanceToPinOrderer($distanceToPinOrderer)
+  {
+    $column = $this->context->getResponsibleMapperForField($distanceToPinOrderer->getField())->getPreparedColumnForField($distanceToPinOrderer->getField());
+
+	$orderClause = "ST_Distance(".$column." , ST_MakePoint(".$distanceToPinOrderer->getLongitude().",".$distanceToPinOrderer->getLatitude().")::geography)";
+
+    if ($distanceToPinOrderer->getDirection() == 'desc')
+	{
+	    $orderClause .= ' DESC ';
+	} 
+	else 
+	{
+	    $orderClause .= ' ASC ';
+	}
+	
+    $this->setClauseForOrderer($distanceToPinOrderer, $orderClause);
+  }
   
   public function getClauseForOrderer($orderer)
   {

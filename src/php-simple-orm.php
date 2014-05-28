@@ -37,6 +37,7 @@ require_once(dirname(__FILE__).'/mappers/PostgreSqlOrderClause.php');
 require_once(dirname(__FILE__).'/mappers/MySqlWhereClause.php');
 require_once(dirname(__FILE__).'/mappers/SqlForeignKeyEntityMapper.php');
 
+require_once(dirname(__FILE__).'/mappers/DistanceToPinOrdererDetector.php');
 
 
 require_once(dirname(__FILE__).'/repositories/AbstractRepository.php');
