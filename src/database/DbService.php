@@ -53,8 +53,8 @@ class DbService
 			if ($result->hasError())
 			{
 			  
+        error_log('ERROR: '.$sql.'used for '.get_class($this->getDbConnector()));
         die('ERROR: '.$sql.'used for '.get_class($this->getDbConnector()));
-			  error_log('ERROR: '.$sql.'used for '.get_class($this->getDbConnector()));
 				throw new \ErrorException('Wrongggg query in Engine: '.$this->getDbConnector()->getDebugName().' '.$sql.' returned ERROR: '.$this->getDbConnector()->getLastError());
 				//throw new Exception('Wrong query? '.$sql);
 			}
