@@ -1,4 +1,4 @@
 php-simple-orm
 ==============
 
-a simple O/R-Mapper written in php
+a very simple O/R-Mapper written in php
