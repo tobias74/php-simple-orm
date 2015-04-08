@@ -5,22 +5,12 @@ abstract class DomainObject
 {
 
 	protected $id = false;
-  protected $_shardId;
 	
 	public function __construct()
 	{
 		
 	}
 	
-  public function setShardId($val)
-  {
-    $this->_shardId = $val; 
-  }
-  
-  public function getShardId()
-  {
-    return $this->_shardId;
-  }
 
 	public function getId()
 	{

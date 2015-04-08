@@ -41,10 +41,6 @@ class SqlTableMapper
     $this->dbShard = $val;
   }
   
-  public function getShardId()
-  {
-    return $this->dbShard->getId();  
-  }
   
   public function setTableName($val)
   {

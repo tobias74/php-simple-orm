@@ -142,11 +142,6 @@ class MasterDatabaseShard extends DatabaseShard implements IDatabaseShard
     $this->config = $val; 
   }
 	
-  
-	public function getId()
-	{
-		return $this->config->getShardId();	
-	}
 
 
 	public function getTablePrefix()

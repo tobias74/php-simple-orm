@@ -13,7 +13,6 @@ class SqlEntityMapper extends SqlTableMapper
   public function produceEmptyEntity()
   {
     $entity = $this->entityProvider->provide();
-    $entity->setShardId($this->getShardId());
     return $entity;
   }
   
@@ -102,7 +101,6 @@ class SqlEntityMapper extends SqlTableMapper
   {
     $hash = $this->getRowHashForEntity($entity);
     $this->insertQuery($hash);
-    $entity->setShardId($this->getShardId());
   }
         
   public function update($entity)
