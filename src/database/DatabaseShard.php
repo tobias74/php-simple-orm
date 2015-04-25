@@ -109,6 +109,24 @@ abstract class DatabaseShard extends DomainObject implements IDatabaseShard
   
   protected function produceMongoDbService()
   {
+    $mongoConnection = $this->getMongoClient();
+    
+    $mongoDbConfig = $this->getMongoDbConfig();
+    $dbName = $mongoDbConfig->dbName;
+    
+    return $mongoConnection->$dbName;
+  }							
+
+  public function getMongoDB($subBase='')
+  {
+    $mongoConnection = $this->getMongoClient();
+    $mongoDbConfig = $this->getMongoDbConfig();
+    $db = $mongoConnection->selectDB($mongoDbConfig->dbName.$subBase);
+    return $db;
+  }
+	
+  protected function getMongoClient()
+  {
     $mongoDbConfig = $this->getMongoDbConfig();
     
     if ($mongoDbConfig->serverUrl !== '')
@@ -120,11 +138,10 @@ abstract class DatabaseShard extends DomainObject implements IDatabaseShard
         $mongoConnection = new \MongoClient();
     }
     
-    $dbName = $mongoDbConfig->dbName;
-    
-    return $mongoConnection->$dbName;
-  }							
-	
+    return $mongoConnection;    
+  }
+  
+  
 }
 
 class MasterDatabaseShard extends DatabaseShard implements IDatabaseShard
